@@ -8,11 +8,13 @@
 ```
 
 ## Дополнительная информация
+```
   -Подписка на onActivityResult
   -Подписка нас события жизненного цикла Activity
   -HeadlessJS
   -Threading
   -Производительность
+ ```
   [off doc](https://reactnative.dev/docs/native-modules-android)
 
 ## Sources
