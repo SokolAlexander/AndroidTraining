@@ -15,11 +15,11 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 
 public class OpenSettingsModule extends ReactContextBaseJavaModule {
-  // private ReactContext reactContext;
+  private ReactContext reactContext;
 
   public OpenSettingsModule(ReactApplicationContext reactContext) {
     super(reactContext);
-    // this.reactContext = reactContext;
+    this.reactContext = reactContext;
   }
 
   @Override
@@ -39,27 +39,27 @@ public class OpenSettingsModule extends ReactContextBaseJavaModule {
   public void sendEvent() {
     WritableMap params = Arguments.createMap();
     params.putString("someKey", "someValue");
-    // reactContext
-    //         .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-    //         .emit("nativeEvent", params);
+    reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit("nativeEvent", params);
   }
 
   @ReactMethod
   public void openAppNotificationsSettings() {
-    // Intent intent = new Intent("android.settings.APP_NOTIFICATION_SETTINGS"); // Settings.ACTION_APP_NOTIFICATION_SETTINGS
-    // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    // intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    Intent intent = new Intent("android.settings.APP_NOTIFICATION_SETTINGS"); // Settings.ACTION_APP_NOTIFICATION_SETTINGS
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
-    // //for Android 5-7
-    // intent.putExtra("app_package", reactContext.getPackageName());
-    // intent.putExtra("app_uid", reactContext.getApplicationInfo().uid);
+    //for Android 5-7
+    intent.putExtra("app_package", reactContext.getPackageName());
+    intent.putExtra("app_uid", reactContext.getApplicationInfo().uid);
 
-    // // for Android 8 and above
-    // intent.putExtra("android.provider.extra.APP_PACKAGE", reactContext.getPackageName()); // Settings.EXTRA_APP_PACKAGE
+    // for Android 8 and above
+    intent.putExtra("android.provider.extra.APP_PACKAGE", reactContext.getPackageName()); // Settings.EXTRA_APP_PACKAGE
 
-    // if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
-    //     reactContext.startActivity(intent);
-    // }
+    if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
+        reactContext.startActivity(intent);
+    }
   }
 
   @ReactMethod
