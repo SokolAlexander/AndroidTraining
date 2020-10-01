@@ -14,11 +14,10 @@
   -HeadlessJS
   -Threading
   -Производительность
-  https://reactnative.dev/docs/native-modules-android
-```
+ ```
+  [off doc](https://reactnative.dev/docs/native-modules-android)
 
 ## Sources
-```
   Оф дока
     https://reactnative.dev/docs/native-modules-android
 
@@ -47,6 +46,4 @@
     https://m.habr.com/ru/company/epam_systems/blog/347346/
 
   Доклад
-    React Native EU 2019: Emily Janzer - The New React Native
-    https://www.youtube.com/watch?v=52El0EUI6D0
-```
+    [React Native EU 2019: Emily Janzer - The New React Native](https://www.youtube.com/watch?v=52El0EUI6D0)
