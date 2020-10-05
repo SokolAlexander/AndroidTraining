@@ -7,4 +7,4 @@ VideoView.propTypes = {
   url: String,
 };
 
-export default VideoView;
+export {VideoView};

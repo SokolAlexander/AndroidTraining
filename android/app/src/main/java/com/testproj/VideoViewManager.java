@@ -1,27 +1,33 @@
 package com.testproj;
 
-import android.app.AlertDialog;
+// import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.VideoView;
 
+import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.uimanager.LayoutShadowNode;
+import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.facebook.react.views.image.ReactImageView;
 // import com.facebook.react.views.;
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.facebook.drawee.backends.pipeline.Fresco;
+
 import javax.annotation.Nullable;
 import java.util.Map;
 
 
-public class VideoViewManager extends SimpleViewManager<VideoView> {
+public class VideoViewManager extends ViewManager<VideoView, LayoutShadowNode> {
     public static final String REACT_CLASS = "VideoView";
+
+    public static final String COMMAND_PAUSE = "Pause";
 
     @Override
     public String getName() {
@@ -55,6 +61,19 @@ public class VideoViewManager extends SimpleViewManager<VideoView> {
 
 
     @Override
+    public Class<LayoutShadowNode> getShadowNodeClass() {
+        return LayoutShadowNode.class;
+    }
+
+    @Override
+    public void updateExtraData(VideoView root, Object extraData) {}
+
+    @Override
+    public LayoutShadowNode createShadowNodeInstance() {
+        return new LayoutShadowNode();
+    }
+
+    @Override
     public Map getExportedCustomBubblingEventTypeConstants() {
         return MapBuilder.builder()
                 .put(
@@ -77,11 +96,30 @@ public class VideoViewManager extends SimpleViewManager<VideoView> {
                 .build();
     }
 
+    // @Override
+    // public @Nullable Map getExportedCustomDirectEventTypeConstants() {
+    //     return MapBuilder.of(
+    //             "onVideoEnd",
+    //             MapBuilder.of("registrationName", "onEnd")
+    //     );
+    // }
+
     @Override
-    public @Nullable Map getExportedCustomDirectEventTypeConstants() {
-        return MapBuilder.of(
-                "onVideoEnd",
-                MapBuilder.of("registrationName", "onEnd")
-        );
+    public void receiveCommand(
+            VideoView view,
+            String commandType,
+            @Nullable ReadableArray args) {
+        Log.d("video", "command received: " + commandType);
+        switch (commandType) {
+            case COMMAND_PAUSE: {
+                // view.pause();
+                return;
+            }
+            default:
+                throw new IllegalArgumentException(String.format(
+                        "Unsupported command %d received by %s.",
+                        commandType,
+                        getClass().getSimpleName()));
+        }
     }
 }
