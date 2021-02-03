@@ -2,6 +2,7 @@ package com.example.andersentraning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View view) {
-        showToast();
+        // showToast();
+        Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra("additionalText", textView.getText().toString());
+        startActivity(intent);
     }
 }
