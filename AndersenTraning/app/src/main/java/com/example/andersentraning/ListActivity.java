@@ -13,30 +13,42 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListActivity extends AppCompatActivity implements OnItemClickListener {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private String additionalText;
     private TextView header;
+    private final int listLength = 10;
+    private List<ListItem> items = new ArrayList();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("header", "==========");
         setContentView(R.layout.activity_list);
 
+        createList();
+
         recyclerView = findViewById(R.id.recycler_view);
-        adapter = new MyListAdapter(this);
+        adapter = new MyListAdapter(this, items);
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    public void onItemClick(View v) {
-        TextView textView = (TextView) v;
-        Log.d("clicked", textView.getText().toString());
+    private void createList() {
+        for (int i = 0; i < listLength; i++) {
+            items.add(new ListItem("SomeText", i));
+        }
+    }
+
+    public void onItemClick(int position) {
+        ListItem item = items.get(position);
 
         FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
         Fragment prev = this.getSupportFragmentManager().findFragmentByTag(MyDialogFragment.TAG);
@@ -46,8 +58,7 @@ public class ListActivity extends AppCompatActivity implements OnItemClickListen
         }
 
         ft.addToBackStack(null);
-        DialogFragment newFragment = new MyDialogFragment(textView.getText().toString());
+        DialogFragment newFragment = new MyDialogFragment(item.text + ", " + item.number);
         newFragment.show(ft, MyDialogFragment.TAG);
-        return;
     }
 }
