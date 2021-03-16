@@ -7,9 +7,22 @@
     <fragment
         android:id="@+id/home_dest"
         tools:layout="@layout/home_fragment"
-        android:name="com.example.navtrain.HomeFragment" />
+        android:name="com.example.navtrain.HomeFragment" >
+        <action
+            android:id="@+id/action_home_dest_to_level_two"
+            app:destination="@id/level_two"
+            app:enterAnim="@anim/slide_left_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_right_in"
+            app:popExitAnim="@anim/slide_right_out" />
+<!--            />-->
+    </fragment>
     <fragment
         android:id="@+id/settings_dest"
         tools:layout="@layout/settings_fragment"
         android:name="com.example.navtrain.SettingsFragment" />
+    <fragment
+        android:id="@+id/level_two"
+        tools:layout="@layout/level_two"
+        android:name="com.example.navtrain.LevelTwo" />
 </navigation>
