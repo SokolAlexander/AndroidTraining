@@ -25,4 +25,16 @@
         android:id="@+id/level_two"
         tools:layout="@layout/level_two"
         android:name="com.example.navtrain.LevelTwo" />
+    <fragment
+        android:id="@+id/new_screen"
+        tools:layout="@layout/new_screen"
+        android:name="com.example.navtrain.NewScreen" >
+
+        <action
+            android:id="@+id/new_screen_action"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+    </fragment>
 </navigation>
