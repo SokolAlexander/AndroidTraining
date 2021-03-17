@@ -19,13 +19,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration : AppBarConfiguration
-    private lateinit var drawerLayout : DrawerLayout
+    private var drawerLayout : DrawerLayout? = null
     private lateinit var navController: NavController
     private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.nav_activity)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -37,9 +37,12 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
         navController = host.navController
 
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.home_dest, R.id.settings_dest), drawerLayout)
+        if (drawerLayout != null) {
+            appBarConfiguration = AppBarConfiguration(setOf(R.id.home_dest, R.id.settings_dest), drawerLayout)
 
-        setupActionBarWithNavController(navController!!, appBarConfiguration!!)
+            setupActionBarWithNavController(navController!!, appBarConfiguration!!)
+        }
+
         navView.setupWithNavController(navController)
     }
 
@@ -56,19 +59,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId === R.id.new_screen) {
-            val builder = NavOptions.Builder()
-                .setLaunchSingleTop(true)
-                .setEnterAnim(R.anim.slide_left_in)
-                .setExitAnim(R.anim.slide_left_out)
-                .setPopEnterAnim(R.anim.slide_right_in)
-                .setPopExitAnim(R.anim.slide_right_out)
-
-            val navOptions = builder.build()
+            var navOptions = getOptions()
 
             navController.navigate(R.id.new_screen, null, navOptions)
             return true
         }
         return item.onNavDestinationSelected(findNavController(R.id.my_nav_host_fragment))
                 || super.onOptionsItemSelected(item)
+    }
+
+    fun getOptions(): NavOptions {
+        val builder = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setEnterAnim(R.anim.slide_left_in)
+            .setExitAnim(R.anim.slide_left_out)
+            .setPopEnterAnim(R.anim.slide_right_in)
+            .setPopExitAnim(R.anim.slide_right_out)
+
+        return builder.build()
     }
 }
